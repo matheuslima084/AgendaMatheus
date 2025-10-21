@@ -1,10 +1,13 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
 <div class="card border-secondary shadow">
    <div class="card-header bg-secondary text-white text-center">
         <h5 class="mb-0">✏️ Editar Disciplina</h5>
    </div>
 
    <div class="card-body">
-       <form method="post">
+       <form method="post" enctype="multipart/form-data">
            {% csrf_token %}
 
            <div class="mb-3">
@@ -14,7 +17,7 @@
            </div>
 
            <div class="mb-3">
-               <label for="sobrenome" class="form-label fw-bold">sobrenome</label>
+               <label for="sobrenome" class="form-label fw-bold">Sobrenome</label>
                <input type="text" name="sobrenome" id="sobrenome" class="form-control"
                       value="{{ contato.sobrenome }}">
            </div>
@@ -25,22 +28,20 @@
            </div>
 
            <div class="mb-3">
-               <label for="telefone" class="form-label fw-bold">telefone</label>
+               <label for="telefone" class="form-label fw-bold">Telefone</label>
                <input type="text" name="telefone" id="telefone" class="form-control"
                       value="{{ contato.telefone }}">
            </div>
 
-          <div class="mb-3">
+           <div class="mb-3">
                <label for="imagem" class="form-label fw-bold">Imagem</label><br>
 
-               <!-- Se já existe imagem, mostra ela -->
                {% if contato.imagem %}
                    <img src="{{ contato.imagem.url }}" alt="Foto de {{ contato.nome }}"
                         class="img-thumbnail mb-2" width="150">
                    <br>
                {% endif %}
 
-               <!-- Input para upload de nova imagem -->
                <input type="file" name="imagem" id="imagem" class="form-control">
            </div>
 
@@ -51,3 +52,5 @@
        </form>
    </div>
 </div>
+
+{% endblock %}

@@ -2,43 +2,36 @@
 {% block conteudo %}
 
 <div class="card border-secondary shadow">
-   <div class="card-header bg-secondary text-white text-center">
-        <h5 class="mb-0">📚 Listagem</h5>
+  <div class="card-header bg-secondary text-white text-center">
+      <h5 class="mb-0">📚 Listagem</h5>
+  </div>
+
+  <hr class="featurette-divider">
+  {% for cont in contato %}
+  <div class="row featurette align-items-center mb-4">
+    <div class="col-md-8">
+      <h2 class="featurette-heading fw-bold">{{ cont.nome }} {{ cont.sobrenome }}</h2>
+      <p class="lead mb-1"><strong>Telefone:</strong> {{ cont.telefone }}</p>
+      <small>{{ cont.descricao }}</small>
+
+      <div class="d-flex mt-4">
+        <a href="{% url 'editarContato' cont.id %}" class="btn btn-info me-2">Alterar</a>
+        <a href="{% url 'excluirContato' cont.id %}" class="btn btn-danger">Excluir</a>
+      </div>
     </div>
 
-<hr class="featurette-divider">
-{% for cont in contato %}
-<div class="row featurette align-items-center mb-4">
-  <!-- Texto à esquerda -->
-  <div class="col-md-8">
-    <h2 class="featurette-heading fw-bold">{{ cont.nome }} {{ cont.sobrenome }}</h2>
-    <p class="lead mb-1"><strong>Telefone:</strong> {{ cont.telefone }}</p>
-    <small>{{ cont.descricao }}</small>
-
-   <div class="d-flex mt-4">
-  <a href="{% url 'editarContato' cont.id  %}" class="btn btn-info" style="margin-right: 2mm;">Alterar</a>
-  <a href="#" class="btn btn-danger">Excluir</a>
-</div>
+    <div class="col-md-4 text-end">
+      {% if cont.imagem %}
+        <img src="{{ cont.imagem.url }}" alt="Foto de {{ cont.nome }}"
+             class="img-fluid rounded shadow" width="120" height="120">
+      {% else %}
+        <span class="text-muted">Sem imagem</span>
+      {% endif %}
+    </div>
   </div>
+  {% endfor %}
 
-  <!-- Imagem à direita -->
-  <div class="col-md-4 text-end">
-    {% if cont.imagem %}
-      <img src="{{ cont.imagem.url }}" alt="Foto de {{ cont.nome }}"
-           class="img-fluid rounded shadow" width="120" height="120">
-    {% else %}
-      <span class="text-muted"></span>
-    {% endif %}
-  </div>
+  <hr class="my-3">
 </div>
-{% endfor %}
-<!-- Linha de separação ocupando toda a largura -->
-<hr class="my-3">
-
-
-
-</div>
-
-
 
 {% endblock %}
