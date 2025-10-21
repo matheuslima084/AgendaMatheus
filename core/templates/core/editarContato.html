@@ -1,0 +1,53 @@
+<div class="card border-secondary shadow">
+   <div class="card-header bg-secondary text-white text-center">
+        <h5 class="mb-0">✏️ Editar Disciplina</h5>
+   </div>
+
+   <div class="card-body">
+       <form method="post">
+           {% csrf_token %}
+
+           <div class="mb-3">
+               <label for="nome" class="form-label fw-bold">Nome</label>
+               <input type="text" name="nome" id="nome" class="form-control"
+                      value="{{ contato.nome }}">
+           </div>
+
+           <div class="mb-3">
+               <label for="sobrenome" class="form-label fw-bold">sobrenome</label>
+               <input type="text" name="sobrenome" id="sobrenome" class="form-control"
+                      value="{{ contato.sobrenome }}">
+           </div>
+
+           <div class="mb-3">
+               <label for="descricao" class="form-label fw-bold">Descrição</label>
+               <textarea name="descricao" id="descricao" rows="3" class="form-control">{{ contato.descricao }}</textarea>
+           </div>
+
+           <div class="mb-3">
+               <label for="telefone" class="form-label fw-bold">telefone</label>
+               <input type="text" name="telefone" id="telefone" class="form-control"
+                      value="{{ contato.telefone }}">
+           </div>
+
+          <div class="mb-3">
+               <label for="imagem" class="form-label fw-bold">Imagem</label><br>
+
+               <!-- Se já existe imagem, mostra ela -->
+               {% if contato.imagem %}
+                   <img src="{{ contato.imagem.url }}" alt="Foto de {{ contato.nome }}"
+                        class="img-thumbnail mb-2" width="150">
+                   <br>
+               {% endif %}
+
+               <!-- Input para upload de nova imagem -->
+               <input type="file" name="imagem" id="imagem" class="form-control">
+           </div>
+
+           <div class="d-flex justify-content-end">
+                <a href="{% url 'listar_contato' %}" class="btn btn-danger" style="margin-right: 0.1cm;">Cancelar</a>
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </div>
+       </form>
+   </div>
+</div>
