@@ -3,7 +3,7 @@
 
 <div class="card border-secondary shadow">
    <div class="card-header bg-secondary text-white text-center">
-        <h5 class="mb-0">✏️ Editar Disciplina</h5>
+        <h5 class="mb-0">✏️ Editar Contato</h5>
    </div>
 
    <div class="card-body">
@@ -12,14 +12,12 @@
 
            <div class="mb-3">
                <label for="nome" class="form-label fw-bold">Nome</label>
-               <input type="text" name="nome" id="nome" class="form-control"
-                      value="{{ contato.nome }}">
+               <input type="text" name="nome" id="nome" class="form-control" value="{{ contato.nome }}">
            </div>
 
            <div class="mb-3">
                <label for="sobrenome" class="form-label fw-bold">Sobrenome</label>
-               <input type="text" name="sobrenome" id="sobrenome" class="form-control"
-                      value="{{ contato.sobrenome }}">
+               <input type="text" name="sobrenome" id="sobrenome" class="form-control" value="{{ contato.sobrenome }}">
            </div>
 
            <div class="mb-3">
@@ -29,26 +27,23 @@
 
            <div class="mb-3">
                <label for="telefone" class="form-label fw-bold">Telefone</label>
-               <input type="text" name="telefone" id="telefone" class="form-control"
-                      value="{{ contato.telefone }}">
+               <input type="text" name="telefone" id="telefone" class="form-control" value="{{ contato.telefone }}">
            </div>
 
            <div class="mb-3">
                <label for="imagem" class="form-label fw-bold">Imagem</label><br>
 
                {% if contato.imagem %}
-                   <img src="{{ contato.imagem.url }}" alt="Foto de {{ contato.nome }}"
-                        class="img-thumbnail mb-2" width="150">
-                   <br>
+                   <img src="{{ contato.imagem.url }}" alt="Foto de {{ contato.nome }}" class="img-thumbnail mb-2" width="150"><br>
                {% endif %}
 
                <input type="file" name="imagem" id="imagem" class="form-control">
            </div>
 
            <div class="d-flex justify-content-end">
-                <a href="{% url 'listar_contato' %}" class="btn btn-danger" style="margin-right: 0.1cm;">Cancelar</a>
+                <a href="{% url 'core:listar_contato' %}" class="btn btn-danger me-2">Cancelar</a>
                 <button type="submit" class="btn btn-success">Salvar</button>
-            </div>
+           </div>
        </form>
    </div>
 </div>
