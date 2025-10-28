@@ -1,5 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from core.models import Contato
+from django.db.models.functions import Concat
+from django.db.models import Q, Value
+from django.core.paginator import Paginator
+from django.contrib import messages
 
 def add_contato(request):
     if request.method == 'POST':
@@ -20,7 +24,8 @@ def add_contato(request):
             telefone=telefone,
             imagem=imagem
         )
-        return redirect('listar_contato')  # Redireciona após criar para a lista
+        # ✅ usa namespace 'core:'
+        return redirect('core:listar_contato')
 
     return render(request, 'core/add_contato.html')
 
@@ -44,7 +49,8 @@ def editarContato(request, id):
             contato.imagem = imagem
 
         contato.save()
-        return redirect('listar_contato')
+        # ✅ usa namespace 'core:'
+        return redirect('core:listar_contato')
 
     return render(request, 'core/editar_contato.html', {'contato': contato})
 
@@ -52,4 +58,35 @@ def editarContato(request, id):
 def excluirContato(request, id):
     contato = get_object_or_404(Contato, id=id)
     contato.delete()
-    return redirect('listar_contato')
+    # ✅ usa namespace 'core:'
+    return redirect('core:listar_contato')
+
+def buscarContato(request):
+    termo = request.GET.get('termo')
+
+    if not termo:
+        messages.error(request, 'Campo não pode ser vazio!')
+        # ✅ Corrigido: adiciona o namespace 'core:'
+        return redirect('core:listar_contato')
+
+    campos = Concat('nome', Value(' '), 'sobrenome')
+
+    contatos = (
+        Contato.objects
+        .annotate(nome_contato=campos)
+        .filter(Q(nome_contato__icontains=termo))
+    )
+
+    paginator = Paginator(contatos, 6)
+    page = request.GET.get('p')
+    contatos = paginator.get_page(page)
+
+    if not contatos:
+        messages.warning(request, 'Nenhum resultado encontrado.')
+
+    context = {
+        'contatos': contatos,
+        'termo': termo,
+    }
+
+    return render(request, 'core/buscarContato.html', context)

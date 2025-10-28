@@ -3,5 +3,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('core/', include(('core.urls', 'core'), namespace='core')),
+    path('accounts/', include('accounts.urls')),  # rotas de login/logout
+    path('', include('core.urls')),  # home e outras páginas
 ]

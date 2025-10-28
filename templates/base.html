@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>My Title</title>
+    <title>Agendify</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap core CSS -->
@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="{% static 'public/bootstrap/css/sb-admin.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
 
     <style>
         body {
@@ -32,13 +31,13 @@
 
         .topbar {
             margin-left: 180px;
-            height: 45px;
+            height: 60px;
             background-color: #343a40;
             color: white;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
+            padding: 0 30px;
             position: fixed;
             top: 0;
             left: 0;
@@ -48,8 +47,8 @@
 
         .topbar .title {
             font-weight: bold;
-            font-size: 18px;
-            margin-left: -180px;
+            font-size: 20px;
+            color: #fff;
         }
 
         .logout a {
@@ -59,8 +58,38 @@
 
         .content-wrapper {
             margin-left: 180px;
-            margin-top: 45px;
+            margin-top: 70px;
             padding: 20px;
+        }
+
+        /* 🔍 Estilo da barra de pesquisa */
+        .search-form {
+            flex: 1;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .search-form .input-group input {
+            border-radius: 30px 0 0 30px;
+            padding-left: 15px;
+            border: none;
+        }
+
+        .search-form .input-group button {
+            border-radius: 0 30px 30px 0;
+            padding: 0 20px;
+            background-color: #007bff;
+            border: none;
+        }
+
+        .search-form .input-group button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            margin-left: 180px;
+            margin-top: 30px;
+            color: #666;
         }
     </style>
 </head>
@@ -68,53 +97,62 @@
 <body>
 <!-- Sidebar -->
 <nav class="sidebar d-flex flex-column p-3">
-    <br/>
-    <br/>
+    <br/><br/>
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link text-white" href="#"><i class="fa fa-home"></i> Home Page</a>
+        </li>
         <li class="nav-item">
-    <a class="nav-link text-white d-flex justify-content-between align-items-center collapsed"
-       data-toggle="collapse" href="#submenuClientes" aria-expanded="false">
-        <span><i class="fa fa-book me-2"></i> My Agenda</span>
-        <i class="fa fa-angle-down"></i>
-    </a>
-    <div id="submenuClientes" class="collapse">
-        <ul class="list-unstyled ps-3">
-            <li><a class="nav-link text-white" style="padding-left: 1rem;" href="#">Add</a></li>
-            <li><a class="nav-link text-white" style="padding-left: 1rem;" href="#">List</a></li>
-        </ul>
-    </div>
-</li>
-
+            <a class="nav-link text-white d-flex justify-content-between align-items-center collapsed"
+               data-toggle="collapse" href="#submenuClientes" aria-expanded="false">
+                <span><i class="fa fa-book me-2"></i> My Agenda</span>
+                <i class="fa fa-angle-down"></i>
+            </a>
+            <div id="submenuClientes" class="collapse">
+                <ul class="list-unstyled ps-3">
+                    <li><a class="nav-link text-white" style="padding-left: 1rem;" href="{% url 'core:add_contato' %}">Add</a></li>
+                    <li><a class="nav-link text-white" style="padding-left: 1rem;" href="{% url 'core:listar_contato' %}">List</a></li>
+                </ul>
+            </div>
+        </li>
     </ul>
 </nav>
 
-<!-- Topbar -->
+<!-- 🔝 Topbar com busca moderna -->
 <div class="topbar">
     <div class="title">Agendify</div>
+
+    <!-- 🔍 Barra de busca -->
+    <form method="get" action="{% url 'core:buscarContato' %}" class="search-form">
+        <div class="input-group">
+            <input class="form-control"
+                   type="search"
+                   name="termo"
+                   value="{{ request.GET.termo }}"
+                   placeholder="🔍 Buscar contato...">
+            <button class="btn btn-primary" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </form>
+
+    <!-- 🚪 Logout -->
     <div class="logout">
         <a href="#"><i class="fas fa-sign-out-alt"></i> Sair</a>
     </div>
 </div>
 
 <!-- Conteúdo principal -->
-
 <div class="content-wrapper">
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-
-                {%block conteudo%}
-
-
-                {%endblock%}
-
+                {% block conteudo %}
+                {% endblock %}
             </div>
         </div>
     </div>
 </div>
-
 
 <!-- Footer -->
 <footer class="sticky-footer">

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+<div class="card border-secondary shadow">
+    <div class="card-header bg-secondary text-white text-center">
+        <h5 class="mb-0">📚 Resultado da Busca</h5>
+    </div>
+    <hr class="featurette-divider">
+
+    {% if contatos %}
+        {% for c in contatos %}
+        <div class="row featurette align-items-center mb-4">
+            <div class="col-md-8">
+                <h2 class="featurette-heading fw-bold">{{ c.nome }} {{ c.sobrenome }}</h2>
+                <p class="lead mb-1"><strong>Telefone:</strong> {{ c.telefone }}</p>
+                <small>{{ c.descricao }}</small>
+
+                <div class="d-flex mt-4">
+                    <a href="{% url 'core:editarContato' c.id %}" class="btn btn-info me-2">Alterar</a>
+                    <a href="{% url 'core:excluirContato' c.id %}" class="btn btn-danger">Excluir</a>
+                </div>
+            </div>
+
+            <div class="col-md-4 text-end">
+                {% if c.imagem %}
+                <img src="{{ c.imagem.url }}" alt="Foto de {{ c.nome }}"
+                     class="img-fluid rounded shadow" width="120" height="120">
+                {% else %}
+                <span class="text-muted">Sem imagem</span>
+                {% endif %}
+            </div>
+        </div>
+        <hr class="my-3">
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info">Nenhum contato encontrado.</div>
+    {% endif %}
+
+</div>
+<br><br>
+{% endblock %}
