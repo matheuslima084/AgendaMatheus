@@ -11,8 +11,9 @@ def login(request):
         if user is not None:
             auth_login(request, user)
             messages.success(request, 'Logado com sucesso!')
-            return redirect('listar_contato')
+            return redirect('/listar_contato/')  # <-- use o caminho direto
         else:
             messages.error(request, 'E-mail ou senha incorreta!')
 
     return render(request, 'accounts/login.html')
+

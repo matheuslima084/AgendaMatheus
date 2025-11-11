@@ -110,8 +110,8 @@
             </a>
             <div id="submenuClientes" class="collapse">
                 <ul class="list-unstyled ps-3">
-                    <li><a class="nav-link text-white" style="padding-left: 1rem;" href="{% url 'core:add_contato' %}">Add</a></li>
-                    <li><a class="nav-link text-white" style="padding-left: 1rem;" href="{% url 'core:listar_contato' %}">List</a></li>
+                    <li><a class="nav-link text-white" style="padding-left: 1rem;" href="{% url 'add_contato' %}">Add</a></li>
+                    <li><a class="nav-link text-white" style="padding-left: 1rem;" href="{% url 'listar_contato' %}">List</a></li>
                 </ul>
             </div>
         </li>
@@ -123,7 +123,7 @@
     <div class="title">Agendify</div>
 
     <!-- 🔍 Barra de busca -->
-    <form method="get" action="{% url 'core:buscarContato' %}" class="search-form">
+    <form method="get" action="{% url 'buscarContato' %}" class="search-form">
         <div class="input-group">
             <input class="form-control"
                    type="search"

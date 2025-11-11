@@ -1,26 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
     <title>Login</title>
 </head>
 <body>
     <h1>Login</h1>
 
     {% if messages %}
-    <ul>
+        <ul>
         {% for message in messages %}
-        <li>{{ message }}</li>
+            <li>{{ message }}</li>
         {% endfor %}
-    </ul>
+        </ul>
     {% endif %}
 
     <form method="POST">
         {% csrf_token %}
-        <label>Username:</label>
+        <label>Usuário:</label>
         <input type="text" name="username" required><br>
-        <label>Password:</label>
+        <label>Senha:</label>
         <input type="password" name="password" required><br>
-        <button type="submit">Login</button>
+        <button type="submit">Entrar</button>
     </form>
 </body>
 </html>

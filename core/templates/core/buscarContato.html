@@ -3,8 +3,9 @@
 
 <div class="card border-secondary shadow">
     <div class="card-header bg-secondary text-white text-center">
-        <h5 class="mb-0">📚 Resultado da Busca</h5>
+        <h5 class="mb-0">🔍 Resultado da Busca</h5>
     </div>
+
     <hr class="featurette-divider">
 
     {% if contatos %}
@@ -16,26 +17,52 @@
                 <small>{{ c.descricao }}</small>
 
                 <div class="d-flex mt-4">
-                    <a href="{% url 'core:editarContato' c.id %}" class="btn btn-info me-2">Alterar</a>
-                    <a href="{% url 'core:excluirContato' c.id %}" class="btn btn-danger">Excluir</a>
+                    <a href="{% url 'editarContato' c.id %}" class="btn btn-info me-2">Alterar</a>
+                    <a href="{% url 'excluirContato' c.id %}" class="btn btn-danger">Excluir</a>
                 </div>
             </div>
 
             <div class="col-md-4 text-end">
                 {% if c.imagem %}
-                <img src="{{ c.imagem.url }}" alt="Foto de {{ c.nome }}"
-                     class="img-fluid rounded shadow" width="120" height="120">
+                    <img src="{{ c.imagem.url }}" alt="Foto de {{ c.nome }}"
+                         class="img-fluid rounded shadow" width="120" height="120">
                 {% else %}
-                <span class="text-muted">Sem imagem</span>
+                    <span class="text-muted">Sem imagem</span>
                 {% endif %}
             </div>
         </div>
         <hr class="my-3">
         {% endfor %}
-    {% else %}
-        <div class="alert alert-info">Nenhum contato encontrado.</div>
-    {% endif %}
 
+        <!-- Paginação -->
+        {% if contatos.has_other_pages %}
+        <nav aria-label="Navegação de páginas">
+            <ul class="pagination justify-content-center">
+                {% if contatos.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?termo={{ termo }}&p={{ contatos.previous_page_number }}">Anterior</a>
+                </li>
+                {% endif %}
+
+                {% for num in contatos.paginator.page_range %}
+                <li class="page-item {% if contatos.number == num %}active{% endif %}">
+                    <a class="page-link" href="?termo={{ termo }}&p={{ num }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+
+                {% if contatos.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?termo={{ termo }}&p={{ contatos.next_page_number }}">Próxima</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+    {% else %}
+        <div class="alert alert-info text-center">Nenhum contato encontrado.</div>
+    {% endif %}
 </div>
-<br><br>
+
 {% endblock %}
+
